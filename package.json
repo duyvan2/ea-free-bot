@@ -1,0 +1,15 @@
+{
+  "name": "ea-free-bot",
+  "version": "1.0.0",
+  "description": "EA Free Trial Telegram Bot",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "dependencies": {
+    "grammy": "^1.21.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
