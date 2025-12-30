@@ -21,7 +21,7 @@ const CONFIG = {
   CHANNEL_USERNAME: '@ea_mql5',
   LICENSE_KEY: 'EA-FREE-2025-ABCDE',
   EXPIRE_DATE: '30/01/2026',
-  EA_DOWNLOAD_LINK: 'https://www.mql5.com/',
+  EA_DOWNLOAD_LINK: 'https://drive.google.com/file/d/1BECHz0vqgXYUq6aqSLakm1ScmEURQmfu/view?usp=sharing',
   SUPPORT_TELEGRAM: 'https://t.me/DuyVanNguy',
   CHANNEL_ID: null,
   DEFAULT_LANGUAGE: 'en'
