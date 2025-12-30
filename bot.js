@@ -33,7 +33,7 @@ const userLanguages = {};
 // Translations
 const TEXTS = {
   vi: {
-    welcome_title: '🎉 Chào mừng {username} đến với Uni!',
+    welcome_title: '🎉 Chào mừng {username} đến với EA Universe MQL5!',
     free_license: '🎁 *Nhận FREE LICENSE KEY 30 ngày:*',
     slots: '✅ 100 slots available',
     full_features: '✅ Full features',
