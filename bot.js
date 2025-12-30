@@ -22,6 +22,7 @@ const CONFIG = {
   LICENSE_KEY: 'EA-FREE-2025-ABCDE',
   EXPIRE_DATE: '30/01/2026',
   EA_DOWNLOAD_LINK: 'https://www.mql5.com/',
+   SUPPORT_TELEGRAM: 'https://t.me/DuyVanNguy',  // ← THÊM DÒNG NÀY
   CHANNEL_ID: null
 };
 
@@ -85,12 +86,16 @@ bot.command('support', async (ctx) => {
     `💬 *HỖ TRỢ*
 
 Nếu bạn gặp vấn đề:
-• Cài đặt EA
-• Sử dụng license key
-• Lỗi kỹ thuật
+- Cài đặt EA
+- Sử dụng license key
+- Lỗi kỹ thuật
 
-👉 Liên hệ admin trong channel ${CONFIG.CHANNEL_USERNAME}`,
-    { parse_mode: 'Markdown' }
+👉 Liên hệ trực tiếp: ${CONFIG.SUPPORT_TELEGRAM}`,
+    { 
+      parse_mode: 'Markdown',
+      reply_markup: new InlineKeyboard()
+        .url('💬 Liên hệ Admin', CONFIG.SUPPORT_TELEGRAM)
+    }
   );
 });
 
@@ -167,7 +172,7 @@ Vui lòng:
    ✅ Backtest & setup mới nhất
    ✅ Tips trading miễn phí
 
-💬 *Cần hỗ trợ?* Gõ /support`,
+💬 💬 *Cần hỗ trợ?* ${CONFIG.SUPPORT_TELEGRAM},
       {
         parse_mode: 'Markdown',
         reply_markup: new InlineKeyboard()
