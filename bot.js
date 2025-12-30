@@ -33,7 +33,7 @@ const userLanguages = {};
 // Translations
 const TEXTS = {
   vi: {
-    welcome_title: '🎉 Chào mừng {username} đến với EA Free Trial!',
+    welcome_title: '🎉 Chào mừng {username} đến với Uni!',
     free_license: '🎁 *Nhận FREE LICENSE KEY 30 ngày:*',
     slots: '✅ 100 slots available',
     full_features: '✅ Full features',
@@ -73,7 +73,7 @@ const TEXTS = {
     language_changed: '✅ Ngôn ngữ đã được chuyển sang Tiếng Việt!\n\nGõ /start để bắt đầu lại.'
   },
   en: {
-    welcome_title: '🎉 Welcome {username} to EA Free Trial!',
+    welcome_title: '🎉 Welcome {username} to EA Universe MQL5!',
     free_license: '🎁 *Get FREE LICENSE KEY for 30 days:*',
     slots: '✅ 100 slots available',
     full_features: '✅ Full features',
