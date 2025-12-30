@@ -1,7 +1,20 @@
+// Updated: 2025-12-30 - Fix token loading
 const { Bot, InlineKeyboard } = require('grammy');
 
-// Khởi tạo bot với token từ environment variable
-const bot = new Bot(process.env.BOT_TOKEN);
+// Kiểm tra token trước khi khởi tạo bot
+const BOT_TOKEN = process.env.BOT_TOKEN;
+
+if (!BOT_TOKEN) {
+  console.error('❌ CRITICAL ERROR: BOT_TOKEN is not set!');
+  console.error('Please add BOT_TOKEN to Railway Variables');
+  process.exit(1);
+}
+
+console.log('✅ BOT_TOKEN loaded successfully');
+console.log('Token starts with:', BOT_TOKEN.substring(0, 10) + '...');
+
+// Khởi tạo bot
+const bot = new Bot(BOT_TOKEN);
 
 // Thông tin cấu hình
 const CONFIG = {
@@ -9,7 +22,7 @@ const CONFIG = {
   LICENSE_KEY: 'EA-FREE-2025-ABCDE',
   EXPIRE_DATE: '30/01/2026',
   EA_DOWNLOAD_LINK: 'https://www.mql5.com/',
-  CHANNEL_ID: null // Sẽ được lấy tự động
+  CHANNEL_ID: null
 };
 
 // Lấy Channel ID từ username
@@ -19,7 +32,8 @@ async function getChannelId() {
     CONFIG.CHANNEL_ID = chat.id;
     console.log('✅ Channel ID:', CONFIG.CHANNEL_ID);
   } catch (error) {
-    console.error('❌ Không thể lấy Channel ID. Kiểm tra bot đã được thêm vào channel chưa!');
+    console.error('❌ Không thể lấy Channel ID:', error.message);
+    console.error('⚠️ Kiểm tra bot đã được thêm vào channel chưa!');
   }
 }
 
@@ -27,9 +41,9 @@ async function getChannelId() {
 async function checkUserJoined(userId) {
   try {
     const member = await bot.api.getChatMember(CONFIG.CHANNEL_USERNAME, userId);
-    // Status có thể là: creator, administrator, member
     return ['creator', 'administrator', 'member'].includes(member.status);
   } catch (error) {
+    console.error(`Error checking user ${userId}:`, error.message);
     return false;
   }
 }
@@ -45,6 +59,7 @@ function createKeyboard() {
 // Command /start
 bot.command('start', async (ctx) => {
   const username = ctx.from.username ? `@${ctx.from.username}` : ctx.from.first_name;
+  console.log(`📥 User ${username} (${ctx.from.id}) started bot`);
   
   await ctx.reply(
     `🎉 *Chào mừng ${username} đến với EA Free Trial!*
@@ -109,16 +124,17 @@ bot.command('key', async (ctx) => {
 
 // Xử lý callback khi user nhấn nút "✅ Đã Join"
 bot.callbackQuery('check_joined', async (ctx) => {
-  await ctx.answerCallbackQuery(); // Tắt loading icon
+  await ctx.answerCallbackQuery();
   
   const userId = ctx.from.id;
   const username = ctx.from.username ? `@${ctx.from.username}` : ctx.from.first_name;
   
-  // Kiểm tra đã join chưa
+  console.log(`🔍 Checking if user ${username} joined channel...`);
+  
   const hasJoined = await checkUserJoined(userId);
   
   if (!hasJoined) {
-    // Chưa join
+    console.log(`❌ User ${username} has NOT joined yet`);
     await ctx.editMessageText(
       `❌ *Bạn chưa join channel!*
 
@@ -131,7 +147,7 @@ Vui lòng:
       }
     );
   } else {
-    // Đã join → Gửi key
+    console.log(`✅ User ${username} (${userId}) đã nhận key`);
     await ctx.editMessageText(
       `🎉 *Cảm ơn bạn đã join channel!*
 
@@ -160,8 +176,6 @@ Vui lòng:
           .url('📢 Vào Channel', `https://t.me/${CONFIG.CHANNEL_USERNAME.replace('@', '')}`)
       }
     );
-    
-    console.log(`✅ User ${username} (${userId}) đã nhận key`);
   }
 });
 
@@ -171,7 +185,14 @@ bot.catch((err) => {
 });
 
 // Khởi động bot
-bot.start().then(() => {
-  console.log('🤖 Bot đang chạy...');
-  getChannelId(); // Lấy channel ID khi bot khởi động
-});
+console.log('🚀 Starting bot...');
+bot.start()
+  .then(() => {
+    console.log('🤖 Bot đang chạy...');
+    console.log('📡 Bot username:', bot.botInfo.username);
+    getChannelId();
+  })
+  .catch((err) => {
+    console.error('❌ Failed to start bot:', err);
+    process.exit(1);
+  });
