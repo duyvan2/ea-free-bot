@@ -1,4 +1,4 @@
-// Updated: 2025-12-30 - Fix token loading
+// Updated: 2025-12-30 - Fix token loading & Add direct support contact
 const { Bot, InlineKeyboard } = require('grammy');
 
 // Kiểm tra token trước khi khởi tạo bot
@@ -22,7 +22,7 @@ const CONFIG = {
   LICENSE_KEY: 'EA-FREE-2025-ABCDE',
   EXPIRE_DATE: '30/01/2026',
   EA_DOWNLOAD_LINK: 'https://www.mql5.com/',
-   SUPPORT_TELEGRAM: 'https://t.me/DuyVanNguy',  // ← THÊM DÒNG NÀY
+  SUPPORT_TELEGRAM: 'https://t.me/DuyVanNguy',
   CHANNEL_ID: null
 };
 
@@ -86,9 +86,9 @@ bot.command('support', async (ctx) => {
     `💬 *HỖ TRỢ*
 
 Nếu bạn gặp vấn đề:
-- Cài đặt EA
-- Sử dụng license key
-- Lỗi kỹ thuật
+• Cài đặt EA
+• Sử dụng license key
+• Lỗi kỹ thuật
 
 👉 Liên hệ trực tiếp: ${CONFIG.SUPPORT_TELEGRAM}`,
     { 
@@ -172,13 +172,15 @@ Vui lòng:
    ✅ Backtest & setup mới nhất
    ✅ Tips trading miễn phí
 
-💬 💬 *Cần hỗ trợ?* ${CONFIG.SUPPORT_TELEGRAM},
+💬 *Cần hỗ trợ?* ${CONFIG.SUPPORT_TELEGRAM}`,
       {
         parse_mode: 'Markdown',
         reply_markup: new InlineKeyboard()
           .url('📥 Tải EA', CONFIG.EA_DOWNLOAD_LINK)
           .row()
           .url('📢 Vào Channel', `https://t.me/${CONFIG.CHANNEL_USERNAME.replace('@', '')}`)
+          .row()
+          .url('💬 Liên hệ Admin', CONFIG.SUPPORT_TELEGRAM)
       }
     );
   }
