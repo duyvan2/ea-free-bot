@@ -19,7 +19,7 @@ const bot = new Bot(BOT_TOKEN);
 // Thông tin cấu hình
 const CONFIG = {
   CHANNEL_USERNAME: '@ea_mql5',
-  LICENSE_KEY: 'EA-FREE-2025-ABCDE',
+  LICENSE_KEY: 'RAHT-A9BJ-HGLG-RENL',
   EXPIRE_DATE: '30/01/2026',
   EA_DOWNLOAD_LINK: 'https://drive.google.com/file/d/1BECHz0vqgXYUq6aqSLakm1ScmEURQmfu/view?usp=sharing',
   SUPPORT_TELEGRAM: 'https://t.me/DuyVanNguy',
